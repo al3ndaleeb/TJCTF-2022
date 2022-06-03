@@ -1,12 +1,13 @@
 # Boxed
 
-After analysing the binary you can extract it by PyInstaller Extractor
+After analysing the binary, I noticed the binary packed with PyInstaller.
+I used pyinstxtractor to extract it.
 ```
 $ python pyinstxtractor.py boxed
 ```
 
-You will get boxed_extracted folder.
-In this folder there is .pyc files. one of them is the main file for challenge. `main.pyc`
+You will get `boxed_extracted` folder.
+In this folder there is .pyc files. one of them is the main file for the challenge. `main.pyc`
 
 I used Decompyle++ tool to decompile the file and the result was:
 ```
@@ -118,12 +119,12 @@ In the `box.check(inp)` it should receive our input as np.array then make some c
 .text:00007FF1CB1F4F24 _ZN8__main__9check_241B32c8tJTC_2fWQMSNLSg2gb4pKgGzNAE_3dE5ArrayIdLi1E1A7mutable7alignedE endp
 ```
 
-I noticed the library use numba function `dot_2_mv` to multiply the flag_array with a big_array 
+I noticed the library use numba function `dot_2_mv` to multiply the input_array with a big_array 
 and comparing the result with the final_array.
 
 After googleing I found `dot_2_mv` is equivelant to `numpy.dot`.
-so, I decided to extract the data in the big_array and final_array.
-The big_array was with 494 items and because the flag_array type was np.float64, I jumped to the big_array address and convert it's data to float64.
+So, I decided to extract the data in the big_array and final_array.
+The big_array was with 494 items and because the input_array type was np.float64, I jumped to the big_array address and convert it's data to float64.
 and this is the result
 ```
 .rodata:00007FF1CB208118 ; double big_array[494]
